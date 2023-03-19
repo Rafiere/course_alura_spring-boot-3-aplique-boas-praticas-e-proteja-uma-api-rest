@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import com.electronwill.nightconfig.core.conversion.Path;
 import jakarta.validation.Valid;
 import med.voll.api.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class MedicoController {
 
         /* O método "created" devolverá o cabeçalho "Location" automaticamente. */
         return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(novoMedico));
+    }
+
+    @GetMapping("/{idMedico}")
+    public ResponseEntity<DadosDetalhamentoMedico> listarPeloId(@PathVariable Long idMedico){
+
+        var medico = repository.getReferenceById(idMedico);
+
+        return ResponseEntity.ok().body(new DadosDetalhamentoMedico(medico));
     }
 
     @GetMapping
